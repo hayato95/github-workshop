@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>今日のおみくじ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>🎋 今日のおみくじ 🎋</h1>
+    <p class="lead">ボタンを押して、今日の運勢を占おう！</p>
+
+    <button id="draw-button">おみくじを引く</button>
+
+    <section id="result" class="result" hidden>
+      <p class="fortune" id="result-fortune"></p>
+      <ul class="details">
+        <li>ラッキーカラー: <span id="result-color"></span></li>
+        <li>ラッキーアイテム: <span id="result-item"></span></li>
+        <li>ラッキーナンバー: <span id="result-number"></span></li>
+      </ul>
+      <p class="message" id="result-message"></p>
+    </section>
+  </main>
+
+  <script src="app-logic.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

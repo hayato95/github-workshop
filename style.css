@@ -1,0 +1,88 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fdf6e3;
+  --card-bg: #ffffff;
+  --text: #333333;
+  --accent: #d1495b;
+  --accent-dark: #a8324a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  font-family: "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
+  color: var(--text);
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 1.6rem;
+}
+
+.lead {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: var(--accent-dark);
+}
+
+.result {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #ddd;
+}
+
+.fortune {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--accent);
+  margin: 0 0 1rem;
+}
+
+.details {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  text-align: left;
+  display: inline-block;
+}
+
+.details li {
+  margin: 0.3rem 0;
+}
+
+.message {
+  font-style: italic;
+  color: #555;
+}
