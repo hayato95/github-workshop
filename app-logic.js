@@ -24,8 +24,8 @@ function getLuckyNumber(index) {
 // 例: getFortune(0) は何らかの文字列(例 "大吉")を返す
 // ------------------------------------------------------------
 function getFortune(index) {
-const COLORS = ['赤', '青', '黄', '緑', '紫'];
-  return COLORS[index];
+  const FORTUNES = ['神ってる', '絶好調', 'まあまあ', 'ぼちぼち', '今日は寝よう'];
+  return FORTUNES[index];
 }
 
 // ------------------------------------------------------------
