@@ -8,6 +8,9 @@
 ボタンを押すと「今日の運勢・ラッキーカラー・ラッキーアイテム・ラッキーナンバー」が
 表示されるシンプルなおみくじアプリです。
 
+🔗 **公開ページ（GitHub Pages）**: https://hayato95.github.io/github-workshop/
+（mainブランチの内容がそのまま表示されます。参加者の実装が進むほど賑やかになります）
+
 `app-logic.js` の中にある4つの関数（`getFortune` / `getLuckyColor` / `getLuckyItem` /
 `getLuckyMessage`）はまだ実装されていません。参加者はそれぞれ1つずつ担当し、
 自分のissue・ブランチで実装してPRを出します。
@@ -41,16 +44,13 @@ node --test tests/*.test.js
 - [`docs/issues.md`](docs/issues.md): 親issue・sub-issueの下書き（主催者用）
 - [`docs/workshop-guide.md`](docs/workshop-guide.md): 当日の進行ガイド（主催者用）
 
-## 主催者向け: GitHubへの公開手順（参考）
-このリポジトリをGitHub上に公開し、参加者を招待する場合のコマンド例です
-（実行は主催者ご自身でお願いします）。
+## 主催者向け: 公開設定について
+このリポジトリは **Public** です。GitHub Pagesで`index.html`を公開するためで
+（Privateのままだと無料プランではPagesが使えません）、内容に機密情報は無いため
+公開してあります。
 
+コラボレーターを招待する場合のコマンド例:
 ```bash
-# GitHub上にリポジトリを作成してpushする場合（GitHub CLIを使う例）
-gh repo create <リポジトリ名> --private --source=. --remote=origin
-git push -u origin main
-
-# コラボレーターを招待する場合
 gh repo edit --add-collaborator <参加者のGitHubユーザー名>
 ```
 
