@@ -1,5 +1,12 @@
 // GitHub Actions上のNode.jsで実行されるテスト（node:testを使用、npm installは不要）
 // ローカルで実行する場合: node --test tests/app-logic.test.js
+//
+// このテストは「値の中身が正しいか」ではなく「値の形が正しいか」をチェックします。
+// ラベルや色などの具体的な文言は担当者が自由に決めてよいので、
+// - 空文字列でないか
+// - 5つ(index 0〜4)がすべて異なるか（重複していないか）
+// - 同じindexなら毎回同じ値を返すか（乱数を使っていないか）
+// を確認します。
 
 const test = require('node:test');
 const assert = require('node:assert');
@@ -11,39 +18,47 @@ const {
   getLuckyMessage,
 } = require('../app-logic.js');
 
+function assertFiveDistinctNonEmptyStrings(fn, label) {
+  const values = [0, 1, 2, 3, 4].map((i) => fn(i));
+
+  values.forEach((v, i) => {
+    assert.strictEqual(typeof v, 'string', `${label}(${i}) は文字列を返す必要があります`);
+    assert.ok(v.length > 0, `${label}(${i}) は空文字列を返してはいけません`);
+  });
+
+  const uniqueValues = new Set(values);
+  assert.strictEqual(uniqueValues.size, 5, `${label} の5つの値は、すべて異なる必要があります（重複NG）`);
+
+  // 同じindexを2回渡しても、同じ値が返ってくること（決定的であること）
+  assert.strictEqual(fn(2), fn(2), `${label}(2) は呼び出すたびに同じ値を返す必要があります`);
+}
+
 test('getLuckyNumber: サンプル関数はindexに対応する数字を返す(見本なので常に成功する)', () => {
   assert.strictEqual(getLuckyNumber(0), 7);
   assert.strictEqual(getLuckyNumber(4), 9);
 });
 
-test('getFortune: indexに対応する運勢ラベルを返す', () => {
-  assert.strictEqual(getFortune(0), '大吉');
-  assert.strictEqual(getFortune(1), '中吉');
-  assert.strictEqual(getFortune(2), '吉');
-  assert.strictEqual(getFortune(3), '小吉');
-  assert.strictEqual(getFortune(4), '凶');
+test('getFortune: 5つの運勢ラベルを返す(重複なし・決定的)', () => {
+  assertFiveDistinctNonEmptyStrings(getFortune, 'getFortune');
 });
 
-test('getLuckyColor: indexに対応するラッキーカラーを返す', () => {
-  assert.strictEqual(getLuckyColor(0), '赤');
-  assert.strictEqual(getLuckyColor(1), '青');
-  assert.strictEqual(getLuckyColor(2), '黄');
-  assert.strictEqual(getLuckyColor(3), '緑');
-  assert.strictEqual(getLuckyColor(4), '紫');
+test('getLuckyColor: 5つのラッキーカラーを返す(重複なし・決定的)', () => {
+  assertFiveDistinctNonEmptyStrings(getLuckyColor, 'getLuckyColor');
 });
 
-test('getLuckyItem: indexに対応するラッキーアイテムを返す', () => {
-  assert.strictEqual(getLuckyItem(0), '傘');
-  assert.strictEqual(getLuckyItem(1), '腕時計');
-  assert.strictEqual(getLuckyItem(2), '本');
-  assert.strictEqual(getLuckyItem(3), 'コーヒー');
-  assert.strictEqual(getLuckyItem(4), 'スニーカー');
+test('getLuckyItem: 5つのラッキーアイテムを返す(重複なし・決定的)', () => {
+  assertFiveDistinctNonEmptyStrings(getLuckyItem, 'getLuckyItem');
 });
 
-test('getLuckyMessage: 運勢に対応するメッセージを返す', () => {
-  assert.strictEqual(getLuckyMessage('大吉'), '最高の1日になりそう！');
-  assert.strictEqual(getLuckyMessage('中吉'), '良いことがありそうな予感！');
-  assert.strictEqual(getLuckyMessage('吉'), 'いつも通り、落ち着いて過ごそう');
-  assert.strictEqual(getLuckyMessage('小吉'), '小さな幸せを見つけよう');
-  assert.strictEqual(getLuckyMessage('凶'), '無理せず、ゆっくり過ごそう');
+test('getLuckyMessage: getFortuneが返す5つのラベルそれぞれに、異なる空でないメッセージを返す', () => {
+  const fortunes = [0, 1, 2, 3, 4].map((i) => getFortune(i));
+  const messages = fortunes.map((f) => getLuckyMessage(f));
+
+  messages.forEach((m, i) => {
+    assert.strictEqual(typeof m, 'string', `getLuckyMessage("${fortunes[i]}") は文字列を返す必要があります`);
+    assert.ok(m.length > 0, `getLuckyMessage("${fortunes[i]}") は空文字列を返してはいけません`);
+  });
+
+  const uniqueMessages = new Set(messages);
+  assert.strictEqual(uniqueMessages.size, 5, 'getLuckyMessage は運勢ごとに異なるメッセージを返す必要があります');
 });
