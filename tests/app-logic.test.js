@@ -7,6 +7,10 @@
 // - 5つ(index 0〜4)がすべて異なるか（重複していないか）
 // - 同じindexなら毎回同じ値を返すか（乱数を使っていないか）
 // を確認します。
+//
+// また、4人がそれぞれ別ブランチ・別PRで作業するため、他の担当者がまだ
+// 実装していない関数は「失敗」ではなく「スキップ」として扱います。
+// (自分のPRを出した時点で、他の担当分がTODOのままでもCIが赤くならないようにするため)
 
 const test = require('node:test');
 const assert = require('node:assert');
@@ -17,6 +21,19 @@ const {
   getLuckyItem,
   getLuckyMessage,
 } = require('../app-logic.js');
+
+// 関数がまだ「TODO: 実装してください」のまま(未実装)かどうかを判定する。
+// 未実装なら { implemented: false } を、実装済みなら { implemented: true, value } を返す。
+function tryCall(fn, ...args) {
+  try {
+    return { implemented: true, value: fn(...args) };
+  } catch (error) {
+    if (typeof error.message === 'string' && error.message.startsWith('TODO:')) {
+      return { implemented: false };
+    }
+    throw error; // TODO以外のエラー(バグ)はそのままテスト失敗として扱う
+  }
+}
 
 function assertFiveDistinctNonEmptyStrings(fn, label) {
   const values = [0, 1, 2, 3, 4].map((i) => fn(i));
@@ -38,19 +55,46 @@ test('getLuckyNumber: サンプル関数はindexに対応する数字を返す(�
   assert.strictEqual(getLuckyNumber(4), 9);
 });
 
-test('getFortune: 5つの運勢ラベルを返す(重複なし・決定的)', () => {
+test('getFortune: 5つの運勢ラベルを返す(重複なし・決定的)', (t) => {
+  const probe = tryCall(getFortune, 0);
+  if (!probe.implemented) {
+    t.skip('getFortuneはまだ未実装です（担当者の実装が終わるとテストされます）');
+    return;
+  }
   assertFiveDistinctNonEmptyStrings(getFortune, 'getFortune');
 });
 
-test('getLuckyColor: 5つのラッキーカラーを返す(重複なし・決定的)', () => {
+test('getLuckyColor: 5つのラッキーカラーを返す(重複なし・決定的)', (t) => {
+  const probe = tryCall(getLuckyColor, 0);
+  if (!probe.implemented) {
+    t.skip('getLuckyColorはまだ未実装です（担当者の実装が終わるとテストされます）');
+    return;
+  }
   assertFiveDistinctNonEmptyStrings(getLuckyColor, 'getLuckyColor');
 });
 
-test('getLuckyItem: 5つのラッキーアイテムを返す(重複なし・決定的)', () => {
+test('getLuckyItem: 5つのラッキーアイテムを返す(重複なし・決定的)', (t) => {
+  const probe = tryCall(getLuckyItem, 0);
+  if (!probe.implemented) {
+    t.skip('getLuckyItemはまだ未実装です（担当者の実装が終わるとテストされます）');
+    return;
+  }
   assertFiveDistinctNonEmptyStrings(getLuckyItem, 'getLuckyItem');
 });
 
-test('getLuckyMessage: getFortuneが返す5つのラベルそれぞれに、異なる空でないメッセージを返す', () => {
+test('getLuckyMessage: getFortuneが返す5つのラベルそれぞれに、異なる空でないメッセージを返す', (t) => {
+  const fortuneProbe = tryCall(getFortune, 0);
+  if (!fortuneProbe.implemented) {
+    t.skip('getFortuneが未実装のため、このテストはスキップします');
+    return;
+  }
+
+  const messageProbe = tryCall(getLuckyMessage, fortuneProbe.value);
+  if (!messageProbe.implemented) {
+    t.skip('getLuckyMessageはまだ未実装です（担当者の実装が終わるとテストされます）');
+    return;
+  }
+
   const fortunes = [0, 1, 2, 3, 4].map((i) => getFortune(i));
   const messages = fortunes.map((f) => getLuckyMessage(f));
 
