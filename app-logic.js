@@ -24,7 +24,8 @@ function getLuckyNumber(index) {
 // 例: getFortune(0) は何らかの文字列(例 "大吉")を返す
 // ------------------------------------------------------------
 function getFortune(index) {
-  throw new Error('TODO: 実装してください (担当A: getFortune)');
+const COLORS = ['赤', '青', '黄', '緑', '紫'];
+  return COLORS[index];
 }
 
 // ------------------------------------------------------------
@@ -37,7 +38,8 @@ function getFortune(index) {
 //   - 同じindexを渡したら、いつも同じ文字列を返すこと（実行のたびに変わらない）
 // ------------------------------------------------------------
 function getLuckyColor(index) {
-  throw new Error('TODO: 実装してください (担当B: getLuckyColor)');
+  const COLORS = ['赤', '青', '黄', '緑', '紫'];
+  return COLORS[index];
 }
 
 // ------------------------------------------------------------
@@ -80,3 +82,4 @@ if (typeof module !== 'undefined' && module.exports) {
     getLuckyMessage,
   };
 }
+
