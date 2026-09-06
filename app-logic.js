@@ -8,7 +8,7 @@
 // 担当issueの4関数も、基本はこれと同じ考え方で実装できる。
 // ------------------------------------------------------------
 function getLuckyNumber(index) {
-  const LUCKY_NUMBERS = [7, 3, 21, 4, 9];
+  const LUCKY_NUMBERS = [7, 4545, 8181, 0, 0721];
   return LUCKY_NUMBERS[index];
 }
 
