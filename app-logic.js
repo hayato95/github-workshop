@@ -24,7 +24,8 @@ function getLuckyNumber(index) {
 // 例: getFortune(0) は何らかの文字列(例 "大吉")を返す
 // ------------------------------------------------------------
 function getFortune(index) {
-  throw new Error('TODO: 実装してください (担当A: getFortune)');
+const FORTUNES = ['神ってる', '絶好調', 'まあまあ', 'ぼちぼち', '今日は寝よう'];
+  return FORTUNES[index];
 }
 
 // ------------------------------------------------------------
