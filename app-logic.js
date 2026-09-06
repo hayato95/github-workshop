@@ -80,3 +80,7 @@ if (typeof module !== 'undefined' && module.exports) {
     getLuckyMessage,
   };
 }
+function getLuckyColor(index) {
+  const COLORS = ['赤', '青', '黄', '緑', '紫'];
+  return COLORS[index];
+}
