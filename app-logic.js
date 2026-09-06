@@ -70,7 +70,14 @@ function getLuckyItem(index) {
 // テストは実際に getFortune(0)〜getFortune(4) を呼び出して確認します。
 // ------------------------------------------------------------
 function getLuckyMessage(fortune) {
-  throw new Error('TODO: 実装してください (担当D: getLuckyMessage)');
+  const MESSAGES = {
+    '神ってる': '今日は何をやってもうまくいく日。宝くじ買ってみたら？',
+    '絶好調': '調子いい波に乗ってる。攻めていこう！',
+    'まあまあ': '可もなく不可もなく、いつも通り過ごせば大丈夫。',
+    'ぼちぼち': '無理せずマイペースに。焦らなくていい日。',
+    '今日は寝よう': '今日は早めに切り上げて、しっかり休むのが吉。',
+  };
+  return MESSAGES[fortune];
 }
 
 // ブラウザとNode.js(テスト)の両方から使えるようにするためのガード
